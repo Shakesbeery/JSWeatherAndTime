@@ -1,5 +1,5 @@
 #API keys
-./utils/validation.js
+utils/validation.js
 
 # Logs
 logs
