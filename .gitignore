@@ -1,3 +1,6 @@
+#API keys
+./utils/validation.js
+
 # Logs
 logs
 *.log

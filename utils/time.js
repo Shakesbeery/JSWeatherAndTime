@@ -7,7 +7,11 @@ module.exports = async (lon, lat) => {
     url: `http://api.timezonedb.com/v2.1/get-time-zone?key=${KEYS.time}&format=json&by=position&lat=${lat}&lng=${lon}`,
   })
 
-  const abbr = results.data.nextAbbreviation;
-  const time = results.data.formatted;
-  return {abbr, time,};
+  if (results.status!=200){
+    console.error(result.status);
+  } else {
+    const abbr = results.data.nextAbbreviation;
+    const time = results.data.formatted;
+    return {abbr, time,};
+  }
 }
