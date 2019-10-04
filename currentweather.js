@@ -2,10 +2,13 @@
 
 const rq = require('request');
 const yargs = require('yargs');
+const time = require('./utils/time.js');
+const weather = require('./utils/weather.js');
+const postal = require('./utils/postal.js');
 
 const inpArgs = process.argv.slice(2);
 for (arg of inpArgs){
-  console.log(arg);
+  console.log(arg, postal(arg));
 }
 
 //http://api.timezonedb.com/v2.1/get-time-zone?key=YOUR_API_KEY&format=xml&by=position&lat=40.689247&lng=-74.044502

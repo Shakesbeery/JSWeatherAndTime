@@ -1,0 +1,8 @@
+{
+  "name": "Invisible JS Script",
+  "version": "0.0.1",
+  "dependencies": {
+    "request": "^2.88.0",
+    "yargs": "^14.0.0"
+  }
+}

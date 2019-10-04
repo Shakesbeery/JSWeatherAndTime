@@ -1,5 +1,3 @@
-module.exports{
-  const getWeather = (location, locationType) => {
+module.exports = function (location, locationType) {
     return false;
-  }
 }

@@ -1,5 +1,3 @@
-module.exports{
-  const getTime = (lon, lat) => {
+module.exports = function (lon, lat) {
     return false;
-  }
 }
