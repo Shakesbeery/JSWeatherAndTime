@@ -1,15 +1,31 @@
 #! /usr/bin/env node
 
-const rq = require('request');
 const yargs = require('yargs');
-const time = require('./utils/time.js');
-const weather = require('./utils/weather.js');
-const postal = require('./utils/postal.js');
+const getTime = require('./utils/time.js');
+const getWeather = require('./utils/weather.js');
+const isPostalCode = require('./utils/postal.js');
 
 const inpArgs = process.argv.slice(2);
-for (arg of inpArgs){
-  console.log(arg, postal(arg));
+
+for (location of inpArgs){
+  let idType = 'q';
+  if (isPostalCode(location)){
+    idType = "zip"
+  } 
+  const weatherData = getWeather(location, idType);
+  console.log(weatherData, 'I got evaluated... This is why async is important!');
+  /*const {
+    lat,
+    lon,
+    weather
+  } = weatherData;
+*/
+  //timeData = getTime(lon, lat);
 }
 
+
+
+
+
 //http://api.timezonedb.com/v2.1/get-time-zone?key=YOUR_API_KEY&format=xml&by=position&lat=40.689247&lng=-74.044502
-//http://api.openweathermap.org/data/2.5/weather?q=CITY_NAMEs&appid=API_KEY
+//
