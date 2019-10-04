@@ -1,26 +1,55 @@
 #! /usr/bin/env node
 
-const yargs = require('yargs');
 const getTime = require('./utils/time.js');
 const getWeather = require('./utils/weather.js');
 const isPostalCode = require('./utils/postal.js');
 
-const inpArgs = process.argv.slice(2);
-
-for (location of inpArgs){
+const processLocation = async (location) =>{
   let idType = 'q';
-  if (isPostalCode(location)){
-    idType = "zip"
+  let {
+    country,
+    isMatch,
+  } = isPostalCode(location);
+
+  if (isMatch){
+    idType = "zip";
+    location = `${location},${country}`
   } 
-  const weatherData = getWeather(location, idType);
-  console.log(weatherData, 'I got evaluated... This is why async is important!');
-  /*const {
+
+  const weatherData = await getWeather(location, idType).catch(error => console.error(error));
+  if (!weatherData) {
+    console.log(`Unable to retrieve information about ${location}! Try a city name instead.`)
+    return;
+    
+  } 
+  const {
     lat,
     lon,
-    weather
+    weather,
+    name
   } = weatherData;
-*/
-  //timeData = getTime(lon, lat);
+
+  const timeData = await getTime(lon, lat).catch(error => console.error(error));
+  if (!timeData) {
+    console.log(`Unable to retrieve information about ${location}! Check you spelling or try a city name instead.`)
+    return;
+    
+  } 
+  const {
+    abbr,
+    time
+  } = timeData;
+  console.log(`The weather in ${name} is ${weather} at ${time} ${abbr?abbr:""}\n`)
+}
+
+const inpArgs = process.argv.slice(2);
+
+if (inpArgs) {
+  for (loc of inpArgs){
+    processLocation(loc);
+  }
+} else {
+    console.log("No locations provided! Please try again!")
 }
 
 

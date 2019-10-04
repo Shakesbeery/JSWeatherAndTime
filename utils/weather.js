@@ -1,21 +1,19 @@
 const KEYS = require("./validation.js")
-const request = require('request');
+const axios = require('axios');
 
-module.exports = function (location, locationType) {
-  const url = `http://api.openweathermap.org/data/2.5/weather?${locationType}=${location}&appid=${KEYS.weather}`
-  request(url, (error, response, body) => {
-    if (error || response.statusCode!=200){
-        console.error(error);
-        throw "Could not connect to weather service API!"
-    } else {
-      const json = JSON.parse(body)
-      const lat = json.coord.lat;
-      const lon = json.coord.lon;
-      const weather = json.weather[0].description;
+module.exports = async (location, locationType) => {
+  const results = await axios({
+      method: 'get',
+      url: `http://api.openweathermap.org/data/2.5/weather?${locationType}=${location}&appid=${KEYS.weather}`,
+  })
 
-      console.log({lat, lon, weather,}),
-      console.log("Returning values!")
-      return {lat, lon, weather};
-    }
-})
+  if (results.status!=200){
+    console.error(result.status);
+  } else {
+    const lat = results.data.coord.lat;
+    const lon = results.data.coord.lon;
+    const name = results.data.name;
+    const weather = results.data.weather[0].description;
+    return {lat, lon, weather, name,};
+  }
 }

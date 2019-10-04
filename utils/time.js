@@ -1,15 +1,13 @@
 const KEYS = require("./validation.js")
-const request = require('request');
+const axios = require('axios');
 
-module.exports = function (lon, lat) {
-  const url = `http://api.timezonedb.com/v2.1/get-time-zone?key=${KEYS.time}&format=json&by=position&lat=${lat}&lng=${lon}`
-  request(url, (error, response, body) => {
-    if (error || response.statusCode!=200){
-        console.error(error);
-        throw "Could not connect to weather service API!"
-    } else {
-      console.log(body);
+module.exports = async (lon, lat) => {
+  const results = await axios({
+    method: 'get',
+    url: `http://api.timezonedb.com/v2.1/get-time-zone?key=${KEYS.time}&format=json&by=position&lat=${lat}&lng=${lon}`,
+  })
 
-    }
-})
+  const abbr = results.data.nextAbbreviation;
+  const time = results.data.formatted;
+  return {abbr, time,};
 }
