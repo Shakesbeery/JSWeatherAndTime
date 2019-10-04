@@ -1,5 +1,5 @@
 const KEYS = require("./validation.js")
-const axios = require('axios');
+const axios = require('axios')
 
 module.exports = async (lon, lat) => {
   const results = await axios({
@@ -8,10 +8,10 @@ module.exports = async (lon, lat) => {
   })
 
   if (results.status!=200){
-    console.error(result.status);
+    console.error(result.status)
   } else {
-    const abbr = results.data.nextAbbreviation;
-    const time = results.data.formatted;
-    return {abbr, time,};
+    const abbr = results.data.nextAbbreviation
+    const time = results.data.formatted
+    return {abbr, time,}
   }
 }
