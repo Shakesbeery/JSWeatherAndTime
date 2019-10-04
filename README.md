@@ -10,12 +10,12 @@ The project uses two APIs for weather and time.
 
 You will need API keys for both to run the script. They should be placed in a file **utils/validation.js** with the following structure:
 
-'''javascript
+```javascript
 module.exports = {
   weather: YOUR_WEATHER_API_KEY,
   time: YOUR_TIME_API_KEY
 }
-'''
+```
 
 ### Dependencies
 
